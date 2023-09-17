@@ -1,3 +1,4 @@
+// IS727272 - Cordero Hernández, Marco Ricardo
 // Page Rank a través de GDS
 
 // Propuesta de 4 pasos

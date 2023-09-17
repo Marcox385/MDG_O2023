@@ -1,3 +1,6 @@
+// IS727272 - Cordero Hernández, Marco Ricardo
+// Buscar los nodos a N saltos
+
 // Encontrar todos los nodos alcanzables a N saltos desde una persona
 MATCH (p:Person {name: ''})
 MATCH (p)-[*1..N]-(n) // * Para indicar todos los saltos

@@ -1,4 +1,5 @@
 // IS727272 - Cordero Hernández, Marco Ricardo
+// Sintaxis básica de Cypher
 
 // Comentario
 

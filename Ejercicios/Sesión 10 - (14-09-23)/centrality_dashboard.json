@@ -1,0 +1,320 @@
+{
+  "title": "Centrality Dashboard",
+  "version": "2.3",
+  "settings": {
+    "pagenumber": 0,
+    "editable": true,
+    "fullscreenEnabled": false,
+    "parameters": {
+      "neodash_villian_name": "Joker",
+      "neodash_villian_name_display": "Joker"
+    },
+    "theme": "light"
+  },
+  "pages": [
+    {
+      "title": "Main Page",
+      "reports": [
+        {
+          "id": "682cae44-d84d-40d5-82c1-cde16eb521e2",
+          "title": "",
+          "query": "CALL db.schema.visualization\n\n\n",
+          "width": 3,
+          "height": 2,
+          "x": 0,
+          "y": 0,
+          "type": "graph",
+          "selection": {
+            "SuperHero": "name",
+            "Ability": "name",
+            "Universe": "name",
+            "Villian": "name",
+            "Gender": "name",
+            "Person": "name",
+            "Location": "name"
+          },
+          "settings": {
+            "backgroundColor": "#fff",
+            "description": "Este es el esquema general del grafo"
+          },
+          "schema": [
+            [
+              "SuperHero",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "Ability",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "Universe",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "Villian",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "Gender",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "Person",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "Location",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "LIVE_IN"
+            ],
+            [
+              "ENEMY_OF"
+            ],
+            [
+              "KWOWN_AS"
+            ],
+            [
+              "IS"
+            ],
+            [
+              "PART_OF"
+            ],
+            [
+              "HAS"
+            ],
+            [
+              "COMPANION"
+            ],
+            [
+              "FRIEND_OF"
+            ]
+          ]
+        },
+        {
+          "id": "ac9cbb63-8394-42e1-b653-f63fcd20837d",
+          "title": "",
+          "query": "MATCH (v:Villian)\nRETURN COUNT(v)\n\n\n",
+          "width": 3,
+          "height": 1,
+          "x": 3,
+          "y": 0,
+          "type": "value",
+          "selection": {},
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "cd75f202-67f5-4e13-869f-76c9c4a7ab26",
+          "title": "",
+          "query": "MATCH (v:Villian)\nRETURN v.DEGREE, COUNT(v.Name)\nORDER BY v.DEGREE\n\n",
+          "width": 3,
+          "height": 2,
+          "x": 9,
+          "y": 0,
+          "type": "line",
+          "selection": {
+            "x": "v.DEGREE",
+            "value": [
+              "COUNT(v.Name)"
+            ]
+          },
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "026ef1c4-c155-4869-8f76-c73a2db69acd",
+          "title": "",
+          "query": "MATCH (n:`Villian`) \nWHERE toLower(toString(n.`Name`)) CONTAINS toLower($input) \nRETURN DISTINCT n.`Name` as value,  n.`Name` as display ORDER BY size(toString(value)) ASC LIMIT 5",
+          "width": 3,
+          "height": 1,
+          "x": 3,
+          "y": 1,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Node Property",
+            "entityType": "Villian",
+            "propertyType": "Name",
+            "propertyTypeDisplay": "Name",
+            "parameterName": "neodash_villian_name"
+          },
+          "schema": []
+        },
+        {
+          "id": "c704a72a-9501-4a0b-ad63-e442e28c4204",
+          "title": "",
+          "query": "MATCH (v:Villian)\nWHERE v.Name = $neodash_villian_name\nRETURN v.DEGREE, v.pageRank, v.Closeness, v.Betweenness",
+          "width": 3,
+          "height": 2,
+          "x": 6,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "transposed": true,
+            "compact": true
+          }
+        }
+      ]
+    },
+    {
+      "title": "Ejercicio 2",
+      "reports": [
+        {
+          "id": "12386476-0e88-4804-b310-e251b00da87a",
+          "title": "Villian name",
+          "query": "MATCH (n:`Villian`) \nWHERE toLower(toString(n.`Name`)) CONTAINS toLower($input) \nRETURN DISTINCT n.`Name` as value,  n.`Name` as display ORDER BY size(toString(value)) ASC LIMIT 5",
+          "width": 3,
+          "height": 1,
+          "x": 3,
+          "y": 0,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Node Property",
+            "entityType": "Villian",
+            "propertyType": "Name",
+            "propertyTypeDisplay": "Name",
+            "parameterName": "neodash_villian_name"
+          },
+          "schema": []
+        },
+        {
+          "id": "307af965-b8f5-4cbb-851a-b4a19982a79c",
+          "title": "Jumps",
+          "query": "RETURN true;",
+          "width": 3,
+          "height": 1,
+          "x": 0,
+          "y": 0,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Free Text",
+            "entityType": "jumps",
+            "parameterName": "neodash_jumps"
+          },
+          "schema": []
+        },
+        {
+          "id": "b0be0759-dfa3-4e12-ae88-f377520e7c4b",
+          "title": "1 jump from origin",
+          "query": "MATCH (v:Villian)\nMATCH p=(v)-[*1..2]-(n)\nWHERE v.Name = $neodash_villian_name\nRETURN p;\n\n",
+          "width": 3,
+          "height": 2,
+          "x": 6,
+          "y": 0,
+          "type": "graph",
+          "selection": {
+            "Villian": "Name",
+            "SuperHero": "Name",
+            "Location": "Name",
+            "Gender": "Name",
+            "Universe": "Name",
+            "Person": "Name",
+            "Ability": "Name"
+          },
+          "settings": {},
+          "schema": [
+            [
+              "Villian",
+              "IN_DEGREE",
+              "Betweenness",
+              "OUT_DEGREE",
+              "pageRank",
+              "Closeness",
+              "DEGREE",
+              "Name"
+            ],
+            [
+              "SuperHero",
+              "IN_DEGREE",
+              "OUT_DEGREE",
+              "pageRank",
+              "betweenness",
+              "DEGREE",
+              "Name"
+            ],
+            [
+              "Location",
+              "Name"
+            ],
+            [
+              "Gender",
+              "Name"
+            ],
+            [
+              "Universe",
+              "Name"
+            ],
+            [
+              "Person",
+              "Name"
+            ],
+            [
+              "Ability",
+              "Name"
+            ]
+          ]
+        },
+        {
+          "id": "2a74e7e9-5a9d-4cb7-857c-28960f52fb8b",
+          "title": "2 jumps from origin",
+          "query": "MATCH (v:Villian)\nMATCH p=(v)-[*1..1]-(n)\nWHERE v.Name = $neodash_villian_name\nRETURN p;\n\n\n",
+          "width": 3,
+          "height": 2,
+          "x": 9,
+          "y": 0,
+          "type": "graph",
+          "selection": {
+            "Villian": "Name",
+            "SuperHero": "Name"
+          },
+          "settings": {},
+          "schema": [
+            [
+              "Villian",
+              "IN_DEGREE",
+              "Betweenness",
+              "OUT_DEGREE",
+              "pageRank",
+              "Closeness",
+              "DEGREE",
+              "Name"
+            ],
+            [
+              "SuperHero",
+              "IN_DEGREE",
+              "OUT_DEGREE",
+              "pageRank",
+              "betweenness",
+              "DEGREE",
+              "Name"
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "parameters": {},
+  "extensions": {
+    "active": true,
+    "activeReducers": []
+  }
+}

@@ -1,3 +1,5 @@
+// IS727272 - Cordero Hernández, Marco Ricardo
+
 // Diametro del grafo (dirigido)
 MATCH (start), (end)
 WHERE start <> end

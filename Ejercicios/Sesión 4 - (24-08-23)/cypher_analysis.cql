@@ -1,4 +1,5 @@
 // IS727272 - Cordero Hernández, Marco Ricardo
+// Análisis básico de un grafo a través de Cypher
 
 // Ejecutar ejemplo de películas
 :play movies

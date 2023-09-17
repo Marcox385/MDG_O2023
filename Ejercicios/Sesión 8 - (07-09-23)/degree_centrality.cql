@@ -1,7 +1,6 @@
-// Analizar esquema
-CALL db.schema.visualization;
+// IS727272 - Cordero Hernández, Marco Ricardo
+// Degree Centrality a través de GDS
 
-// -- Degree centrality --
 // Escribir IN_DEGREE
 // 1) Crear un subgrafo (temporal)
 //      Relación NATURAL (default)  == OUT_DEGREE
