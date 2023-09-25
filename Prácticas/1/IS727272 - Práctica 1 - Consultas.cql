@@ -13,7 +13,7 @@ CALL db.labels() YIELD label RETURN label AS NODOS; // Cuáles nodos
 MATCH (n) RETURN COUNT(n) as totalNodos; // Cuántos nodos
 // Atributos y tipos
 CALL db.schema.nodeTypeProperties()
-    YIELD nodeType AS Nodo, propertyName AS Propiedad, propertyTypes AS Tipo;
+YIELD nodeType AS Nodo, propertyName AS Propiedad, propertyTypes AS Tipo;
 
 // 4.4. ¿Cuáles son los tipos de relaciones y sus atributos?
 // Cuáles relaciones y tipos
