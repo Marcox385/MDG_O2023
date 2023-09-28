@@ -1,0 +1,585 @@
+{
+  "title": "Equipo 3 - S3",
+  "version": "2.3",
+  "settings": {
+    "pagenumber": 0,
+    "editable": true,
+    "fullscreenEnabled": false,
+    "parameters": {
+      "neodash_person_label": "Daenerys",
+      "neodash_person_label_display": "Daenerys",
+      "neodash_person_label_1": "Jon",
+      "neodash_person_label_1_display": "Jon",
+      "neodash_person_label_pr": "Arya",
+      "neodash_person_label_pr_display": "Arya"
+    },
+    "theme": "dark"
+  },
+  "pages": [
+    {
+      "title": "Análisis básico",
+      "reports": [
+        {
+          "id": "2810ae14-eed9-4811-a89d-1a785dec4055",
+          "title": "Esquema del grafo",
+          "query": "CALL db.schema.visualization",
+          "width": 3,
+          "height": 2,
+          "x": 0,
+          "y": 0,
+          "type": "graph",
+          "selection": {
+            "Person": "(label)",
+            "INTERACTS_WITH": "(label)"
+          },
+          "settings": {
+            "backgroundColor": "#131D29",
+            "enableExploration": false,
+            "frozen": true,
+            "nodePositions": {
+              "-6": [
+                -6.719365282834707,
+                4.522649709600283
+              ],
+              "-7": [
+                0,
+                0
+              ]
+            }
+          },
+          "schema": [
+            [
+              "Person",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "INTERACTS_WITH"
+            ]
+          ]
+        },
+        {
+          "id": "a72a896f-2853-4ddb-a811-3227c6f00cf3",
+          "title": "Grafo completo",
+          "query": "MATCH p=()-[]-()\nRETURN p",
+          "width": 6,
+          "height": 2,
+          "x": 3,
+          "y": 0,
+          "type": "graph",
+          "selection": {
+            "Person": "Label"
+          },
+          "settings": {
+            "backgroundColor": "#131D29"
+          },
+          "schema": [
+            [
+              "Person",
+              "IN_DEGREE",
+              "OUT_DEGREE",
+              "Betweenness",
+              "Closeness",
+              "PageRank_MOD",
+              "PageRank",
+              "Label",
+              "DEGREE",
+              "Id"
+            ]
+          ]
+        },
+        {
+          "id": "3ce315fe-3c02-449b-882d-d37ae7c63f0d",
+          "title": "Total nodos",
+          "query": "MATCH (n)\nRETURN COUNT(DISTINCT n)",
+          "width": 3,
+          "height": 1,
+          "x": 9,
+          "y": 0,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29",
+            "color": "#fff",
+            "textAlign": "center",
+            "verticalAlign": "middle",
+            "monospace": true
+          },
+          "schema": []
+        },
+        {
+          "id": "4ea42b2a-2c65-4bc3-9c1e-31758b40c9ce",
+          "title": "Total relaciones",
+          "query": "MATCH ()-[r]->()\nRETURN COUNT(DISTINCT r)",
+          "width": 3,
+          "height": 1,
+          "x": 9,
+          "y": 1,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29",
+            "color": "#fff",
+            "textAlign": "center",
+            "verticalAlign": "middle",
+            "monospace": true
+          },
+          "schema": []
+        },
+        {
+          "id": "07375be5-6a6c-42ec-847d-ce5c90e107d8",
+          "title": "Relaciones con más peso",
+          "query": "MATCH (n)-[r]->(m)\nRETURN n.Label AS PersonajeA,\nr.Weight AS Peso,\nm.Label AS PersonajeB\nORDER BY Peso DESC\nLIMIT 10\n",
+          "width": 3,
+          "height": 2,
+          "x": 0,
+          "y": 2,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29",
+            "compact": false
+          }
+        },
+        {
+          "id": "583e8270-f652-4e85-b028-4a6798c7d918",
+          "title": "Diámetro",
+          "query": "MATCH (start), (end)\nWHERE start <> end\nWITH shortestPath((start)-[*]-(end)) AS path\nWITH length(path) AS distance\nWHERE distance IS NOT NULL\nRETURN distance AS DiámetroDirigido\nORDER BY distance DESC\nLIMIT 1;",
+          "width": 3,
+          "height": 1,
+          "x": 9,
+          "y": 2,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29",
+            "color": "#fff",
+            "monospace": true,
+            "textAlign": "center",
+            "verticalAlign": "middle"
+          },
+          "schema": []
+        },
+        {
+          "id": "98fb2820-ba4a-4c47-b981-c0970a346eb6",
+          "title": "Diámetro dirigido",
+          "query": "MATCH (start), (end)\nWHERE start <> end\nWITH shortestPath((start)-[*]->(end)) AS path\nWITH length(path) AS distance\nWHERE distance IS NOT NULL\nRETURN distance AS DiámetroDirigido\nORDER BY distance DESC\nLIMIT 1;",
+          "width": 3,
+          "height": 1,
+          "x": 9,
+          "y": 3,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29",
+            "color": "#fff",
+            "monospace": true,
+            "textAlign": "center",
+            "verticalAlign": "middle"
+          },
+          "schema": []
+        },
+        {
+          "id": "53d7c608-640d-41a4-a15c-98354de1d76c",
+          "title": "Personaje",
+          "query": "MATCH (n:`Person`) \nWHERE toLower(toString(n.`Label`)) CONTAINS toLower($input) \nRETURN DISTINCT n.`Label` as value,  n.`Label` as display ORDER BY size(toString(value)) ASC LIMIT 5",
+          "width": 2,
+          "height": 1,
+          "x": 3,
+          "y": 2,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Node Property",
+            "entityType": "Person",
+            "propertyType": "Label",
+            "propertyTypeDisplay": "Label",
+            "parameterName": "neodash_person_label",
+            "backgroundColor": "#131D29"
+          },
+          "schema": []
+        },
+        {
+          "id": "91e259e3-30db-4dc5-8ed8-e0b0ea2874b8",
+          "title": "Relaciones",
+          "query": "MATCH (m)-[r]-(n)\nWHERE m.Label = $neodash_person_label\nRETURN m, r, n\n",
+          "width": 4,
+          "height": 2,
+          "x": 5,
+          "y": 2,
+          "type": "graph",
+          "selection": {
+            "Person": "Label",
+            "INTERACTS_WITH": "(label)"
+          },
+          "settings": {
+            "backgroundColor": "#131D29"
+          },
+          "schema": [
+            [
+              "Person",
+              "IN_DEGREE",
+              "OUT_DEGREE",
+              "Betweenness",
+              "Closeness",
+              "PageRank_MOD",
+              "PageRank",
+              "Label",
+              "DEGREE",
+              "Id"
+            ],
+            [
+              "INTERACTS_WITH",
+              "Weight"
+            ]
+          ]
+        },
+        {
+          "id": "d2854ce8-54d5-4751-9c7f-fe2856cd1c90",
+          "title": "Nodos a 2 saltos desde personaje",
+          "query": "MATCH (m)\nMATCH p=(m)-[*1..2]-(n)\nWHERE m.Label = $neodash_person_label\nRETURN p\n",
+          "width": 6,
+          "height": 2,
+          "x": 0,
+          "y": 4,
+          "type": "graph",
+          "selection": {
+            "Person": "Label"
+          },
+          "settings": {
+            "backgroundColor": "#131D29"
+          },
+          "schema": [
+            [
+              "Person",
+              "IN_DEGREE",
+              "OUT_DEGREE",
+              "Betweenness",
+              "Closeness",
+              "PageRank_MOD",
+              "PageRank",
+              "Label",
+              "DEGREE",
+              "Id"
+            ]
+          ]
+        },
+        {
+          "id": "9a29ae94-3db0-45b4-b41f-fc3e598c615b",
+          "title": "Camino más corto entre personajes",
+          "query": "MATCH (n), (m)\nWHERE n.Label = $neodash_person_label\nAND m.Label = $neodash_person_label_1\nRETURN shortestPath((n)-[*]-(m));\n",
+          "width": 6,
+          "height": 2,
+          "x": 6,
+          "y": 4,
+          "type": "graph",
+          "selection": {
+            "Person": "Label"
+          },
+          "settings": {
+            "backgroundColor": "#131D29"
+          },
+          "schema": [
+            [
+              "Person",
+              "IN_DEGREE",
+              "OUT_DEGREE",
+              "Betweenness",
+              "Closeness",
+              "PageRank_MOD",
+              "PageRank",
+              "Label",
+              "DEGREE",
+              "Id"
+            ]
+          ]
+        },
+        {
+          "id": "1a7d842e-5fb5-4a78-b6a4-09c5d1795a5c",
+          "title": "PersonajeB",
+          "query": "MATCH (n:`Person`) \nWHERE toLower(toString(n.`Label`)) CONTAINS toLower($input) \nRETURN DISTINCT n.`Label` as value,  n.`Label` as display ORDER BY size(toString(value)) ASC LIMIT 5",
+          "width": 2,
+          "height": 1,
+          "x": 3,
+          "y": 3,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Node Property",
+            "entityType": "Person",
+            "propertyType": "Label",
+            "propertyTypeDisplay": "Label",
+            "parameterName": "neodash_person_label_1",
+            "backgroundColor": "#131D29",
+            "id": "1"
+          },
+          "schema": []
+        }
+      ]
+    },
+    {
+      "title": "Análisis de Centralidad",
+      "reports": [
+        {
+          "id": "41d6b5a9-43a8-4f8d-85af-1089aa57b695",
+          "title": "GoT",
+          "query": "![got_logo](https://i.pinimg.com/originals/06/63/ee/0663eeacca54ae7ca42e17acbb369b32.png)",
+          "width": 2,
+          "height": 1,
+          "x": 5,
+          "y": 0,
+          "type": "text",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29"
+          },
+          "schema": []
+        },
+        {
+          "id": "5a3062dc-6210-4e71-8ebc-444f3b4d336c",
+          "title": "Top de relaciones",
+          "query": "MATCH (n)\nRETURN n.Label AS Personaje,\nn.DEGREE AS Cantidad\nORDER BY Cantidad DESC\nLIMIT 10\n",
+          "width": 5,
+          "height": 2,
+          "x": 0,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29"
+          }
+        },
+        {
+          "id": "f8e120e2-3f21-4597-8384-df19388d9774",
+          "title": "S3",
+          "query": "![s3](https://c-cl.cdn.smule.com/rs-s53/arr/99/b0/0eca6cf2-cef2-44c6-9626-bc2fe63ce3e7.jpg)",
+          "width": 2,
+          "height": 1,
+          "x": 5,
+          "y": 1,
+          "type": "text",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29"
+          },
+          "schema": []
+        },
+        {
+          "id": "38912a82-b03b-436f-8810-8d47e2f66907",
+          "title": "Top de relaciones hacía el personaje",
+          "query": "MATCH (n)\nRETURN n.Label AS Personaje,\nn.OUT_DEGREE AS Relaciones\nORDER BY Relaciones DESC\nLIMIT 10\n",
+          "width": 5,
+          "height": 2,
+          "x": 7,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29"
+          }
+        },
+        {
+          "id": "14af6315-ce55-4a11-ae01-b5788b933e12",
+          "title": "Top de popularidad",
+          "query": "MATCH (n)\nRETURN n.Label AS Personaje,\nn.PageRank AS Reputación\nORDER BY Reputación DESC\nLIMIT 10\n",
+          "width": 4,
+          "height": 2,
+          "x": 0,
+          "y": 2,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29"
+          }
+        },
+        {
+          "id": "9c869a79-77cd-4c7c-b879-f7a24b376853",
+          "title": "Personaje",
+          "query": "MATCH (n:`Person`) \nWHERE toLower(toString(n.`Label`)) CONTAINS toLower($input) \nRETURN DISTINCT n.`Label` as value,  n.`Label` as display ORDER BY size(toString(value)) ASC LIMIT 5",
+          "width": 4,
+          "height": 1,
+          "x": 4,
+          "y": 2,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29",
+            "type": "Node Property",
+            "entityType": "Person",
+            "propertyType": "Label",
+            "propertyTypeDisplay": "Label",
+            "parameterName": "neodash_person_label_pr",
+            "id": "pr"
+          },
+          "schema": []
+        },
+        {
+          "id": "d06137b8-9eea-4d0d-93d3-0a1b002aaddb",
+          "title": "Popularidad",
+          "query": "CALL {\n  MATCH (n)\n  RETURN n.PageRank AS PR\n  ORDER BY PR DESC LIMIT 1\n} WITH PR\nMATCH (n)\nWHERE n.Label = $neodash_person_label_pr\nRETURN ROUND((n.PageRank / PR) * 100, 3) + '%'",
+          "width": 4,
+          "height": 1,
+          "x": 4,
+          "y": 3,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29",
+            "type": "Node Property",
+            "entityType": "Person",
+            "propertyType": "Label",
+            "propertyTypeDisplay": "Label",
+            "parameterName": "neodash_person_label_pr",
+            "id": "pr",
+            "monospace": true,
+            "textAlign": "center",
+            "verticalAlign": "middle"
+          },
+          "schema": []
+        },
+        {
+          "id": "615380e3-606e-41c3-80c8-b5facc1d6354",
+          "title": "Popularidad de personajes cercanos",
+          "query": "MATCH (n)-[]-(m)\nWHERE n.Label = $neodash_person_label_pr\nRETURN m.Label AS Personaje,\nm.PageRank AS Reputación\nORDER BY Reputación DESC\n",
+          "width": 4,
+          "height": 2,
+          "x": 8,
+          "y": 2,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29"
+          }
+        },
+        {
+          "id": "87846238-7ce0-421e-bf21-4247918b8b23",
+          "title": "Top de personajes con alianzas",
+          "query": "MATCH (n)\nRETURN n.Label AS Personaje,\nn.Betweenness AS Puntuación\nORDER BY Puntuación DESC\nLIMIT 10\n",
+          "width": 4,
+          "height": 2,
+          "x": 0,
+          "y": 4,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29"
+          }
+        },
+        {
+          "id": "1e1b802d-f5f5-46da-a4df-1cf0ce6e952f",
+          "title": "Habilidad de formar alianzas",
+          "query": "CALL {\n  MATCH (n)\n  RETURN n.Betweenness AS BT\n  ORDER BY BT DESC LIMIT 1\n} WITH BT\nMATCH (n)\nWHERE n.Label = $neodash_person_label_pr\nRETURN ROUND((n.Betweenness / BT) * 100, 3) + '%'",
+          "width": 4,
+          "height": 2,
+          "x": 4,
+          "y": 4,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29",
+            "type": "Node Property",
+            "entityType": "Person",
+            "propertyType": "Label",
+            "propertyTypeDisplay": "Label",
+            "parameterName": "neodash_person_label_pr",
+            "id": "pr",
+            "monospace": true,
+            "textAlign": "center",
+            "verticalAlign": "middle"
+          },
+          "schema": []
+        },
+        {
+          "id": "ad22226e-79e0-436b-b5e6-7d7bd3e2f869",
+          "title": "Top de personajes mensajeros",
+          "query": "MATCH (n)\nRETURN n.Label AS Personaje,\nn.Closeness AS Puntuación\nORDER BY Puntuación DESC\nLIMIT 50\n",
+          "width": 4,
+          "height": 2,
+          "x": 0,
+          "y": 6,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29"
+          }
+        },
+        {
+          "id": "5c7dc5b7-7b24-4460-b88c-131d6ef98a4d",
+          "title": "Habilidad de pasar mensajes",
+          "query": "CALL {\n  MATCH (n)\n  RETURN n.Closeness AS CL\n  ORDER BY CL DESC LIMIT 1\n} WITH CL\nMATCH (n)\nWHERE n.Label = $neodash_person_label_pr\nRETURN ROUND((n.Closeness / CL) * 100, 3) + '%'",
+          "width": 4,
+          "height": 2,
+          "x": 8,
+          "y": 4,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29",
+            "type": "Node Property",
+            "entityType": "Person",
+            "propertyType": "Label",
+            "propertyTypeDisplay": "Label",
+            "parameterName": "neodash_person_label_pr",
+            "id": "pr",
+            "monospace": true,
+            "textAlign": "center",
+            "verticalAlign": "middle"
+          },
+          "schema": []
+        },
+        {
+          "id": "ecb24f76-f756-4155-9bb1-a127f941973e",
+          "title": "Panorama del personaje",
+          "query": "MATCH (n)\nMATCH p=(n)-[*1..1]-()\nWHERE n.Label = $neodash_person_label_pr\nRETURN p\n",
+          "width": 8,
+          "height": 2,
+          "x": 4,
+          "y": 6,
+          "type": "graph",
+          "selection": {
+            "Person": "Label"
+          },
+          "settings": {
+            "backgroundColor": "#131D29",
+            "frozen": true
+          },
+          "schema": [
+            [
+              "Person",
+              "IN_DEGREE",
+              "OUT_DEGREE",
+              "Betweenness",
+              "Closeness",
+              "PageRank_MOD",
+              "PageRank",
+              "Label",
+              "DEGREE",
+              "Id"
+            ]
+          ]
+        },
+        {
+          "id": "a6e81789-07f9-4f94-8a54-5f4d8da2f32e",
+          "title": "Personajes más relevantes de la temporada",
+          "query": "CALL {\n    MATCH (n) RETURN n.DEGREE AS DG ORDER BY DG DESC LIMIT 1\n} WITH DG\nCALL {\n    MATCH (n) RETURN n.PageRank AS PR ORDER BY PR DESC LIMIT 1\n} WITH DG, PR\nCALL {\n    MATCH (n) RETURN n.Betweenness AS BT ORDER BY BT DESC LIMIT 1\n} WITH DG, PR, BT\nCALL {\n    MATCH (n) RETURN n.Closeness AS CL ORDER BY CL DESC LIMIT 1\n} WITH DG, PR, BT, CL\nMATCH (n)\nRETURN n.Label AS Personaje,\nROUND((n.DEGREE/DG)*25+(n.PageRank/PR)*25+(n.Betweenness/BT)*25+(n.Closeness/CL)*25, 2) AS Calificación\nORDER BY Calificación DESC\nLIMIT 5;\n",
+          "width": 12,
+          "height": 1,
+          "x": 0,
+          "y": 8,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#131D29",
+            "transposed": true
+          }
+        }
+      ]
+    }
+  ],
+  "parameters": {},
+  "extensions": {
+    "active": true,
+    "activeReducers": []
+  }
+}

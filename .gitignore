@@ -1,7 +1,9 @@
 # Archivos específicos
 *.docx
+*.pptx
+*.zip
 
 # Directorios
 Tareas/IGNORE
 Referencias/
-# Prácticas/**/*MDG* # Omitido por ahora
+Prácticas/**/*MDG*
