@@ -1,0 +1,95 @@
+{
+  "title": "Medidas de centralidad de países",
+  "version": "2.3",
+  "settings": {
+    "pagenumber": 0,
+    "editable": true,
+    "fullscreenEnabled": false,
+    "parameters": {},
+    "theme": "dark"
+  },
+  "pages": [
+    {
+      "title": "Medidas",
+      "reports": [
+        {
+          "id": "1844e0b6-6694-471d-81f5-8f584a35b146",
+          "title": "Top Degree",
+          "query": "MATCH (p:Pais)\nRETURN p.Label AS Pais, p.DEGREE AS DEGREE\nORDER BY DEGREE DESC\nLIMIT 3;",
+          "width": 2,
+          "height": 2,
+          "x": 0,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "18a9be58-450a-4de7-8f3a-f487b07391c4",
+          "title": "Top InDeg",
+          "query": "MATCH (p:Pais)\nRETURN p.Label AS Pais, p.IN_DEGREE AS IN_DEGREE\nORDER BY IN_DEGREE DESC\nLIMIT 3;\n",
+          "width": 2,
+          "height": 2,
+          "x": 2,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "586638c4-cb76-4273-8f91-b76d221bf589",
+          "title": "Top OutDeg",
+          "query": "MATCH (p:Pais)\nRETURN p.Label AS Pais, p.OUT_DEGREE AS OUT_DEGREE\nORDER BY OUT_DEGREE DESC\nLIMIT 3;\n",
+          "width": 2,
+          "height": 2,
+          "x": 4,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "356d8d7a-5b74-41d0-8147-9f4b7ab90691",
+          "title": "Top Closeness",
+          "query": "MATCH (p:Pais)\nRETURN p.Label AS Pais, p.Closeness AS Closeness\nORDER BY Closeness DESC\nLIMIT 3;\n",
+          "width": 2,
+          "height": 2,
+          "x": 6,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "fc04907f-a81b-4db7-9ae3-bfca95667f59",
+          "title": "Top PageRank",
+          "query": "MATCH (p:Pais)\nRETURN p.Label AS Pais, p.PageRank AS PageRank\nORDER BY PageRank DESC\nLIMIT 3;\n",
+          "width": 2,
+          "height": 2,
+          "x": 8,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "761a6524-20b9-48c4-8f84-0114b4b0fa25",
+          "title": "Top Betweenness",
+          "query": "MATCH (p:Pais)\nRETURN p.Label AS Pais, p.Betweenness AS Betweenness\nORDER BY Betweenness DESC\nLIMIT 3;\n",
+          "width": 2,
+          "height": 2,
+          "x": 10,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        }
+      ]
+    }
+  ],
+  "parameters": {},
+  "extensions": {
+    "active": true,
+    "activeReducers": []
+  }
+}
