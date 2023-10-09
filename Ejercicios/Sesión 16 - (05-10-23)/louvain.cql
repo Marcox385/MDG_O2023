@@ -1,3 +1,4 @@
+// IS727272 - Cordero Hernández, Marco Ricardo
 // Introducción a algoritmos de comunidad
 // Louvain
 
@@ -21,13 +22,13 @@ CALL gds.louvain.write.estimate(
 )
 YIELD nodeCount, relationshipCount, bytesMin, bytesMax, requiredMemory;
 
-// 3. Cálculo del algoritmo
+// 3. Ejecución del algoritmo
 CALL gds.louvain.stream('Louvain_UND')
 YIELD nodeId, communityId, intermediateCommunityIds
 RETURN gds.util.asNode(nodeId).Name AS Villian, communityId, intermediateCommunityIds
 ORDER BY communityId DESC;
 
-// 4. Escribir los resultados
+// 4. Escritura de los resultados
 CALL gds.louvain.write(
     'Louvain_UND',
     { writeProperty: 'Louvain' }
@@ -51,13 +52,13 @@ CALL gds.graph.project(
     }
 );
 
-// 3. Cálculo del algoritmo
+// 3. Ejecución del algoritmo
 CALL gds.louvain.stream('Louvain_UND_SH')
 YIELD nodeId, communityId, intermediateCommunityIds
 RETURN gds.util.asNode(nodeId).Name AS SuperHero, communityId, intermediateCommunityIds
 ORDER BY communityId DESC;
 
-// 4. Escribir los resultados
+// 4. Escritura de los resultados
 CALL gds.louvain.write(
     'Louvain_UND_SH',
     { writeProperty: 'Louvain' }
@@ -81,13 +82,13 @@ CALL gds.graph.project(
     }
 );
 
-// 3. Cálculo del algoritmo
+// 3. Ejecución del algoritmo
 CALL gds.louvain.stream('Louvain_DIR_V')
 YIELD nodeId, communityId, intermediateCommunityIds
 RETURN gds.util.asNode(nodeId).Name AS Villian, communityId, intermediateCommunityIds
 ORDER BY communityId DESC;
 
-// 4. Escribir los resultados
+// 4. Escritura de los resultados
 CALL gds.louvain.write(
     'Louvain_DIR_V',
     { writeProperty: 'Louvain_DIR' }
@@ -111,13 +112,13 @@ CALL gds.graph.project(
     }
 );
 
-// 3. Cálculo del algoritmo
+// 3. Ejecución del algoritmo
 CALL gds.louvain.stream('Louvain_DIR_SH')
 YIELD nodeId, communityId, intermediateCommunityIds
 RETURN gds.util.asNode(nodeId).Name AS SuperHero, communityId, intermediateCommunityIds
 ORDER BY communityId DESC;
 
-// 4. Escribir los resultados
+// 4. Escritura de los resultados
 CALL gds.louvain.write(
     'Louvain_DIR_SH',
     { writeProperty: 'Louvain_DIR' }
@@ -159,13 +160,13 @@ CALL gds.graph.project(
     }
 );
 
-// 3. Cálculo del algoritmo
+// 3. Ejecución del algoritmo
 CALL gds.louvain.stream('Louvain_DIR')
 YIELD nodeId, communityId, intermediateCommunityIds
 RETURN gds.util.asNode(nodeId).Name AS Person, communityId, intermediateCommunityIds
 ORDER BY communityId DESC;
 
-// 4. Escribir los resultados
+// 4. Escritura de los resultados
 CALL gds.louvain.write(
     'Louvain_DIR',
     { writeProperty: 'Louvain_WHOLE' }
