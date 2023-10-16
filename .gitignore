@@ -2,8 +2,11 @@
 *.docx
 *.pptx
 *.zip
+.env
 
 # Directorios
-Tareas/IGNORE
+IGNORE/
 Referencias/
 Prácticas/**/*MDG*
+venv/
+node_modules/

@@ -1,0 +1,21 @@
+{
+  "name": "tarea-8-coloreado-de-un-mapa",
+  "version": "1.0.0",
+  "description": "tarea 8",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ."
+  },
+  "author": "IS727272",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "downloadjs": "^1.4.7",
+    "express": "^4.18.2",
+    "html-to-image": "^1.11.11",
+    "neo4j-driver": "^5.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
