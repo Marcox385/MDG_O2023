@@ -1,0 +1,460 @@
+{
+  "title": "Mini Proyecto 2",
+  "version": "2.3",
+  "settings": {
+    "pagenumber": 0,
+    "editable": true,
+    "fullscreenEnabled": false,
+    "parameters": {
+      "neodash_tipo_de_nodo": "Movie",
+      "neodash_tipo_de_nodo_display": "Movie",
+      "neodash_tipo_de_relacion": "ACTED_IN",
+      "neodash_tipo_de_relacion_display": "ACTED_IN",
+      "neodash_movie_title": "Django Unchained",
+      "neodash_movie_title_display": "Django Unchained",
+      "neodash_category_name": "Horror Movies",
+      "neodash_category_name_display": "Horror Movies",
+      "neodash_country_name": " Mexico",
+      "neodash_country_name_display": " Mexico",
+      "neodash_director": "Quentin Tarantino",
+      "neodash_director_display": "Quentin Tarantino",
+      "neodash_actor": "Adam Sandler",
+      "neodash_actor_display": "Adam Sandler"
+    },
+    "theme": "dark"
+  },
+  "pages": [
+    {
+      "title": "Análisis básico",
+      "reports": [
+        {
+          "id": "5221717a-34f6-4e74-8e71-050c92fb36b7",
+          "title": "Vista general (800 nodos)",
+          "query": "MATCH (a:Movie|Country|Person|Category)-[b]-(c)\nRETURN a, b, c\nLIMIT 500",
+          "width": 3,
+          "height": 2,
+          "x": 9,
+          "y": 0,
+          "type": "graph",
+          "selection": {
+            "Movie": "title",
+            "FROM": "(label)",
+            "Country": "name",
+            "LISTED_IN": "(label)",
+            "Category": "name",
+            "DIRECTED": "(label)",
+            "Person": "name",
+            "SIMILAR": "(label)",
+            "KSIMILAR": "(label)",
+            "SIMILAR_MC": "(label)"
+          },
+          "settings": {},
+          "schema": [
+            [
+              "Movie",
+              "louvain",
+              "WCC",
+              "id",
+              "title",
+              "releaseYear",
+              "dateAdded"
+            ],
+            [
+              "FROM"
+            ],
+            [
+              "Country",
+              "name"
+            ],
+            [
+              "LISTED_IN"
+            ],
+            [
+              "Category",
+              "name"
+            ],
+            [
+              "DIRECTED"
+            ],
+            [
+              "Person",
+              "SCC",
+              "labelPropagation",
+              "name"
+            ],
+            [
+              "SIMILAR",
+              "score"
+            ],
+            [
+              "KSIMILAR",
+              "score"
+            ],
+            [
+              "SIMILAR_MC",
+              "score"
+            ]
+          ]
+        },
+        {
+          "id": "1f1fe989-c252-411f-ad1f-76f51e8adbca",
+          "title": "Esquema general",
+          "query": "CALL db.schema.visualization",
+          "width": 3,
+          "height": 2,
+          "x": 0,
+          "y": 0,
+          "type": "graph",
+          "selection": {
+            "Movie": "name",
+            "Category": "name",
+            "Country": "name",
+            "Person": "name",
+            "ACTED_IN": "name",
+            "SIMILAR_MD": "name",
+            "SIMILAR_MC": "name",
+            "SIMILAR_MA": "name",
+            "LISTED_IN": "name",
+            "DIRECTED": "name",
+            "FROM": "name",
+            "IS_CITIZEN_OF": "name",
+            "SIMILAR": "name",
+            "KSIMILAR": "name"
+          },
+          "settings": {},
+          "schema": [
+            [
+              "Movie",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "Category",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "Country",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "Person",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "ACTED_IN",
+              "name"
+            ],
+            [
+              "SIMILAR_MD",
+              "name"
+            ],
+            [
+              "SIMILAR_MC",
+              "name"
+            ],
+            [
+              "SIMILAR_MA",
+              "name"
+            ],
+            [
+              "LISTED_IN",
+              "name"
+            ],
+            [
+              "DIRECTED",
+              "name"
+            ],
+            [
+              "FROM",
+              "name"
+            ],
+            [
+              "IS_CITIZEN_OF",
+              "name"
+            ],
+            [
+              "SIMILAR",
+              "name"
+            ],
+            [
+              "KSIMILAR",
+              "name"
+            ]
+          ]
+        },
+        {
+          "id": "0d1ccaa7-3c1b-43f8-b764-f8fcc49d01f7",
+          "title": "Total de nodos",
+          "query": "MATCH (n) RETURN LABELS(n) AS tipoNodo, COUNT(DISTINCT n) AS totalNodos\n//UNION\n//MATCH (n) RETURN 'Total' AS tipoNodo, COUNT(DISTINCT n) AS totalNodos;\n",
+          "width": 3,
+          "height": 2,
+          "x": 3,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "10a5fd5c-4f35-437f-a4f1-632b35d2c054",
+          "title": "Total de relaciones",
+          "query": "MATCH ()-[r]->() RETURN TYPE(r) as tipoRelacion, COUNT(r) as totalRelaciones\n\n\n\n",
+          "width": 3,
+          "height": 2,
+          "x": 6,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "65019ba0-7fa9-46de-a7c7-b96023076677",
+          "title": "Diámetro del grafo dirigido",
+          "query": "MATCH () RETURN 2 LIMIT 1;\n\n\n",
+          "width": 3,
+          "height": 2,
+          "x": 0,
+          "y": 2,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "textAlign": "center",
+            "verticalAlign": "middle"
+          },
+          "schema": []
+        },
+        {
+          "id": "145a56e6-2567-4dde-8a29-f31c20a3bae4",
+          "title": "Atributos de relaciones",
+          "query": "CALL db.schema.relTypeProperties()\nYIELD relType AS Relacion, propertyName AS Propiedad, propertyTypes AS Tipo\nWITH Relacion, Propiedad, Tipo\nWHERE Relacion =~ ':`' + $neodash_tipo_de_relacion + '`'\nRETURN Relacion, Propiedad, Tipo\n\n\n",
+          "width": 3,
+          "height": 2,
+          "x": 6,
+          "y": 2,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "073f5617-b63e-4d0d-993a-148afbddaa2c",
+          "title": "Tipo de nodo",
+          "query": "MATCH (n) RETURN DISTINCT LABELS(n)[0]",
+          "width": 3,
+          "height": 1,
+          "x": 9,
+          "y": 2,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Custom Query",
+            "entityType": "Tipo de nodo",
+            "parameterName": "neodash_tipo_de_nodo"
+          },
+          "schema": []
+        },
+        {
+          "id": "2773146d-5656-4a51-a932-c0c8c7490dda",
+          "title": "Tipo de relación",
+          "query": "MATCH ()-[r]-() RETURN DISTINCT TYPE(r)",
+          "width": 3,
+          "height": 1,
+          "x": 9,
+          "y": 3,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Custom Query",
+            "entityType": "Tipo de relacion",
+            "parameterName": "neodash_tipo_de_relacion"
+          },
+          "schema": []
+        },
+        {
+          "id": "94ebf296-cbee-46bb-9ffc-5223fbc7a44d",
+          "title": "ZZZ",
+          "query": "CALL db.schema.nodeTypeProperties()\nYIELD nodeType AS Nodo, propertyName AS Propiedad, propertyTypes AS Tipo\nWITH Nodo, Propiedad, Tipo\nWHERE Nodo =~ ':`' + $neodash_tipo_de_nodo + '`'\nRETURN Nodo, Propiedad, Tipo\n\n\n",
+          "width": 3,
+          "height": 2,
+          "x": 3,
+          "y": 2,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        }
+      ]
+    },
+    {
+      "title": "Recomendaciones",
+      "reports": [
+        {
+          "id": "394735f0-cdf4-4a50-a8f0-78946fd61cd6",
+          "title": "Película",
+          "query": "MATCH (n:`Movie`) \nWHERE toLower(toString(n.`title`)) CONTAINS toLower($input) \nRETURN DISTINCT n.`title` as value,  n.`title` as display ORDER BY size(toString(value)) ASC LIMIT 5",
+          "width": 3,
+          "height": 1,
+          "x": 0,
+          "y": 0,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Node Property",
+            "entityType": "Movie",
+            "propertyType": "title",
+            "propertyTypeDisplay": "title",
+            "parameterName": "neodash_movie_title"
+          },
+          "schema": []
+        },
+        {
+          "id": "23ba913c-7c25-4eeb-94ce-3642f95c1f2c",
+          "title": "Actor",
+          "query": "MATCH (a:Person)-[:ACTED_IN]->(:Movie)\nRETURN DISTINCT a.name",
+          "width": 2,
+          "height": 1,
+          "x": 6,
+          "y": 0,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Custom Query",
+            "entityType": "actor",
+            "parameterName": "neodash_actor",
+            "searchType": "STARTS WITH",
+            "caseSensitive": true,
+            "defaultValue": "null"
+          },
+          "schema": []
+        },
+        {
+          "id": "4dfeb7fb-f6c7-4307-bd43-cec8229748c2",
+          "title": "Director",
+          "query": "MATCH (a:Person)-[:DIRECTED]->(:Movie)\nRETURN DISTINCT a.name",
+          "width": 3,
+          "height": 1,
+          "x": 3,
+          "y": 0,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Custom Query",
+            "entityType": "director",
+            "parameterName": "neodash_director",
+            "searchType": "STARTS WITH",
+            "caseSensitive": true,
+            "defaultValue": "null"
+          },
+          "schema": []
+        },
+        {
+          "id": "033807a2-b70f-473e-91d9-b7ea0736543e",
+          "title": "Otras películas del mismo director",
+          "query": "MATCH (m:Movie)<-[:DIRECTED]-(p:Person)-[:DIRECTED]->(om:Movie)\nWHERE m.title = $neodash_movie_title\nAND m <> om\nRETURN DISTINCT om.title AS Otras_Películas",
+          "width": 3,
+          "height": 2,
+          "x": 0,
+          "y": 1,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "9f801aa4-662f-4978-b60e-401689e9a30a",
+          "title": "Categoría",
+          "query": "MATCH (n:`Category`) \nWHERE toLower(toString(n.`name`)) CONTAINS toLower($input) \nRETURN DISTINCT n.`name` as value,  n.`name` as display ORDER BY size(toString(value)) ASC LIMIT 5",
+          "width": 2,
+          "height": 1,
+          "x": 8,
+          "y": 0,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Node Property",
+            "entityType": "Category",
+            "propertyType": "name",
+            "propertyTypeDisplay": "name",
+            "parameterName": "neodash_category_name"
+          },
+          "schema": []
+        },
+        {
+          "id": "b4e7a440-4e3e-4e81-a87d-9d763bd6cfa3",
+          "title": "País",
+          "query": "MATCH (n:`Country`) \nWHERE toLower(toString(n.`name`)) CONTAINS toLower($input) \nRETURN DISTINCT n.`name` as value,  n.`name` as display ORDER BY size(toString(value)) ASC LIMIT 5",
+          "width": 2,
+          "height": 1,
+          "x": 10,
+          "y": 0,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Node Property",
+            "entityType": "Country",
+            "propertyType": "name",
+            "propertyTypeDisplay": "name",
+            "parameterName": "neodash_country_name"
+          },
+          "schema": []
+        },
+        {
+          "id": "7d3dd75a-b3c4-422c-a6d4-431ae4d52cd5",
+          "title": "Otros directores similares",
+          "query": "MATCH (d:Person)-[:DIRECTED]->(m:Movie)-[:LISTED_IN]->(c:Category)\nMATCH (c)<-[:LISTED_IN]-(om:Movie)<-[:DIRECTED]-(od:Person)\nWHERE m <> om AND d <> od\nAND d.name = $neodash_director\nRETURN DISTINCT od.name AS Otros_Directores\nLIMIT 1000;",
+          "width": 3,
+          "height": 2,
+          "x": 3,
+          "y": 1,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "5601ac7b-4846-445e-9904-840da71ba379",
+          "title": "Películas del país",
+          "query": "MATCH (m:Movie)-[:FROM]->(c:Country)\nWHERE c.name = $neodash_country_name\nRETURN DISTINCT m.title AS Extranjeras;",
+          "width": 2,
+          "height": 2,
+          "x": 10,
+          "y": 1,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "24f36d2f-944b-4bc0-bbea-fa05e444a5a9",
+          "title": "Otras películas del actor",
+          "query": "CALL {\n    MATCH (a:Person)-[:ACTED_IN]->(m:Movie)\n    WHERE a.name = $neodash_actor\n    RETURN a.name AS Actor, m.title AS movie\n    LIMIT 1000\n} WITH movie\nRETURN DISTINCT movie AS Otras_Películas;",
+          "width": 2,
+          "height": 2,
+          "x": 6,
+          "y": 1,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "7fbe18db-77f7-483e-a9cf-73db3ad56fcd",
+          "title": "De la categoría",
+          "query": "MATCH (m:Movie)-[:LISTED_IN]->(c:Category)\nWHERE c.name = $neodash_category_name\nRETURN DISTINCT m.title AS Películas\nLIMIT 1000;\n",
+          "width": 2,
+          "height": 2,
+          "x": 8,
+          "y": 1,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        }
+      ]
+    }
+  ],
+  "parameters": {},
+  "extensions": {
+    "active": true,
+    "activeReducers": []
+  }
+}
