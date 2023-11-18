@@ -14,8 +14,6 @@
 //  - Usuarios <-> Etiquetas de artistas (user_taggedartists.dat)
 //  - Timestamp de etiquetas de artistas (user_taggedartists-timestamps.dat)
 
-//// Debido a la extensión de los datos, los dos últimos archivos serán omitidos
-
 // Artistas (≈ 14 segundos)
 LOAD CSV WITH HEADERS FROM 'file:///dat_files/artists.dat' AS row
 FIELDTERMINATOR '\t'
