@@ -1,0 +1,530 @@
+{
+  "title": "MP_3",
+  "version": "2.4",
+  "settings": {
+    "pagenumber": 0,
+    "editable": true,
+    "fullscreenEnabled": false,
+    "parameters": {
+      "neodash_artist_name": "",
+      "neodash_artist_name_display": "",
+      "neodash_user_id": "",
+      "neodash_user_id_display": "",
+      "neodash_user_id_1": "",
+      "neodash_user_id_1_display": "",
+      "neodash_ds_n": "0",
+      "neodash_w_n": "0"
+    },
+    "theme": "dark"
+  },
+  "pages": [
+    {
+      "title": "Análisis básico",
+      "reports": [
+        {
+          "id": "aad394f9-f1b2-40e6-9061-71be8153c2ac",
+          "title": "Last.fm",
+          "query": "![img](https://www.enter.co/wp-content/uploads/2015/06/Lastfm.jpg)\n\n\n",
+          "width": 5,
+          "height": 3,
+          "x": 9,
+          "y": 0,
+          "type": "text",
+          "selection": {},
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "a056e87f-714a-43e6-b8d8-378039ec1fd6",
+          "title": "Tags más populares",
+          "query": "MATCH (u:User)-[us:USES]-(t:Tag)-[:TAGS]->(a:Artist)\nRETURN t.tagValue AS Tag,\n       COUNT(DISTINCT us) AS Usuarios,\n       COUNT(DISTINCT a) AS Artistas\nORDER BY Usuarios DESC,\n         Artistas DESC\nLIMIT 20;\n",
+          "width": 6,
+          "height": 4,
+          "x": 12,
+          "y": 3,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "afd79a0e-dde5-446d-abd0-c4758d49862a",
+          "title": "Grafo general",
+          "query": "CALL db.schema.visualization\n",
+          "width": 9,
+          "height": 3,
+          "x": 0,
+          "y": 0,
+          "type": "graph",
+          "selection": {
+            "Artist": "name",
+            "Entity": "name",
+            "User": "name",
+            "Tag": "name",
+            "LISTENS_TO": "name",
+            "PATH_1213_TO_1312": "name",
+            "DSSSSP-DASH": "name",
+            "USER-713-MINST": "name",
+            "DIJKSTRA-DASH": "name",
+            "PATH_DS_385": "name",
+            "PATH_1213_TO_YE": "name",
+            "MINSTONES": "name",
+            "USES": "name",
+            "TAGS": "name",
+            "FRIEND_OF": "name"
+          },
+          "settings": {},
+          "schema": [
+            [
+              "Artist",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "Entity",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "User",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "Tag",
+              "name",
+              "indexes",
+              "constraints"
+            ],
+            [
+              "LISTENS_TO",
+              "name"
+            ],
+            [
+              "PATH_1213_TO_1312",
+              "name"
+            ],
+            [
+              "DSSSSP-DASH",
+              "name"
+            ],
+            [
+              "USER-713-MINST",
+              "name"
+            ],
+            [
+              "DIJKSTRA-DASH",
+              "name"
+            ],
+            [
+              "PATH_DS_385",
+              "name"
+            ],
+            [
+              "PATH_1213_TO_YE",
+              "name"
+            ],
+            [
+              "MINSTONES",
+              "name"
+            ],
+            [
+              "USES",
+              "name"
+            ],
+            [
+              "TAGS",
+              "name"
+            ],
+            [
+              "FRIEND_OF",
+              "name"
+            ]
+          ]
+        },
+        {
+          "id": "659c93f8-208d-41c0-aa59-752820526279",
+          "title": "Vista aleatoria",
+          "query": "MATCH p=()--()\nRETURN p\nLIMIT 800\n",
+          "width": 10,
+          "height": 3,
+          "x": 14,
+          "y": 0,
+          "type": "graph",
+          "selection": {
+            "User": "id",
+            "Entity": "name",
+            "Artist": "name"
+          },
+          "settings": {},
+          "schema": [
+            [
+              "User",
+              "id"
+            ],
+            [
+              "Entity",
+              "id",
+              "name"
+            ],
+            [
+              "Artist",
+              "name",
+              "id"
+            ]
+          ]
+        },
+        {
+          "id": "74ce7b68-7542-4700-814d-65dff90451a1",
+          "title": "Artistas más escuchados",
+          "query": "MATCH (:User)-[r:LISTENS_TO]->(a:Artist)\nRETURN a.name AS Artista,\n       COUNT(DISTINCT r) AS Usuarios\nORDER BY Usuarios DESC\nLIMIT 15;\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 0,
+          "y": 3,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "4da92043-5760-48d0-bb5f-0772c703461a",
+          "title": "Usuarios con más amigos",
+          "query": "MATCH (u:User)-[:FRIEND_OF]->(o:User)\nWHERE u <> o\nRETURN u.id AS Usuario,\n       COUNT(DISTINCT o) AS Amigos\nORDER BY Amigos DESC\nLIMIT 15;\n",
+          "width": 6,
+          "height": 4,
+          "x": 6,
+          "y": 3,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "e4cb0c20-5dc0-4421-92dd-6392a415a517",
+          "title": "Diámetro",
+          "query": "MATCH ()\nRETURN 10\nLIMIT 1;\n\n",
+          "width": 6,
+          "height": 2,
+          "x": 18,
+          "y": 3,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "textAlign": "center",
+            "verticalAlign": "middle"
+          },
+          "schema": []
+        },
+        {
+          "id": "1593e024-0c52-43aa-b440-d332c110648e",
+          "title": "Densidad",
+          "query": "MATCH ()\nRETURN 0\nLIMIT 1;\n\n",
+          "width": 6,
+          "height": 2,
+          "x": 18,
+          "y": 5,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "textAlign": "center",
+            "verticalAlign": "middle"
+          },
+          "schema": []
+        }
+      ]
+    },
+    {
+      "title": "Caminos",
+      "reports": [
+        {
+          "id": "cc27a396-82c1-4ca9-875e-37a45f01582b",
+          "title": "Artista",
+          "query": "MATCH (n:`Artist`) \nWHERE toLower(toString(n.`name`)) CONTAINS toLower($input) \nRETURN DISTINCT n.`name` as value,  n.`name` as display ORDER BY size(toString(value)) ASC LIMIT 5",
+          "width": 4,
+          "height": 2,
+          "x": 0,
+          "y": 2,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Node Property",
+            "entityType": "Artist",
+            "propertyType": "name",
+            "propertyTypeDisplay": "name",
+            "parameterName": "neodash_artist_name"
+          },
+          "schema": []
+        },
+        {
+          "id": "e8a12c2b-ea9b-496b-9da9-57884a7f4132",
+          "title": "Usuario",
+          "query": "MATCH (n:`User`) \nWHERE toLower(toString(n.`id`)) CONTAINS toLower($input) \nRETURN DISTINCT n.`id` as value,  n.`id` as display ORDER BY size(toString(value)) ASC LIMIT 5",
+          "width": 4,
+          "height": 2,
+          "x": 0,
+          "y": 0,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Node Property",
+            "entityType": "User",
+            "propertyType": "id",
+            "propertyTypeDisplay": "id",
+            "parameterName": "neodash_user_id"
+          },
+          "schema": []
+        },
+        {
+          "id": "b093358a-45d9-4fbf-aec9-44ffb332ffb7",
+          "title": "Dijkstra",
+          "query": "                                            MATCH (u:User)-[r:`DIJKSTRA-DASH`]->(a:Artist), (u)-[r1]-(n:Entity)\n                                            WHERE ID(n) IN r.nodeIds\n                                            WITH u, r, a, r1, n\n                                            WHERE u.id = toInteger($neodash_user_id)\n                                            AND a.name = $neodash_artist_name\n                                            RETURN u, r, a, r1, n;",
+          "width": 8,
+          "height": 4,
+          "x": 4,
+          "y": 0,
+          "type": "graph",
+          "selection": {
+            "User": "id",
+            "Entity": "name",
+            "DIJKSTRA-DASH": "(label)",
+            "Artist": "name",
+            "LISTENS_TO": "(label)",
+            "PATH_1213_TO_YE": "(label)"
+          },
+          "settings": {
+            "refreshButtonEnabled": true,
+            "autorun": false
+          },
+          "schema": [
+            [
+              "User",
+              "id"
+            ],
+            [
+              "Entity",
+              "id",
+              "name"
+            ],
+            [
+              "DIJKSTRA-DASH",
+              "costs",
+              "nodeIds",
+              "totalCost"
+            ],
+            [
+              "Artist",
+              "name",
+              "id"
+            ],
+            [
+              "LISTENS_TO",
+              "weight"
+            ],
+            [
+              "PATH_1213_TO_YE",
+              "costs",
+              "nodeIds",
+              "totalCost"
+            ]
+          ]
+        },
+        {
+          "id": "e44bb556-a2cc-4820-93a8-b607ca34b64b",
+          "title": "Delta-Stepping",
+          "query": "                                            MATCH (u:User)-[r:`DSSSSP-DASH`]->(v:User)\n                                            WHERE u.id = toInteger($neodash_user_id_1)\n                                            RETURN u, r, v\n                                            LIMIT toInteger($neodash_ds_n);",
+          "width": 8,
+          "height": 4,
+          "x": 12,
+          "y": 0,
+          "type": "graph",
+          "selection": {
+            "User": "id",
+            "Entity": "id",
+            "DSSSSP-DASH": "(label)"
+          },
+          "settings": {
+            "refreshButtonEnabled": true,
+            "autorun": false
+          },
+          "schema": [
+            [
+              "User",
+              "id"
+            ],
+            [
+              "Entity",
+              "id"
+            ],
+            [
+              "DSSSSP-DASH",
+              "costs",
+              "nodeIds",
+              "totalCost"
+            ]
+          ]
+        },
+        {
+          "id": "23e1edd5-fb28-425d-83e2-ab7c038df6f2",
+          "title": "Usuario 1",
+          "query": "MATCH (n:`User`) \nWHERE toLower(toString(n.`id`)) CONTAINS toLower($input) \nRETURN DISTINCT n.`id` as value,  n.`id` as display ORDER BY size(toString(value)) ASC LIMIT 5",
+          "width": 4,
+          "height": 2,
+          "x": 20,
+          "y": 0,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Node Property",
+            "entityType": "User",
+            "propertyType": "id",
+            "propertyTypeDisplay": "id",
+            "parameterName": "neodash_user_id_1",
+            "id": "1"
+          },
+          "schema": []
+        },
+        {
+          "id": "b2272add-c2f5-4eb7-9312-c9216843ead8",
+          "title": "Límite",
+          "query": "RETURN true;",
+          "width": 4,
+          "height": 2,
+          "x": 20,
+          "y": 2,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Free Text",
+            "entityType": "ds_n",
+            "parameterName": "neodash_ds_n"
+          },
+          "schema": []
+        },
+        {
+          "id": "bfec4f9d-b14b-4c19-8eb0-97e629f49721",
+          "title": "Random Walk",
+          "query": "                                                                                                                                    MATCH (u:User), (a:Artist)\n                                                                                                                                    WHERE u.id = toInteger($neodash_user_id)\n                                                                                                                                    AND a.name = $neodash_artist_name\n                                                                                                                                    WITH COLLECT(a) AS sourceNodes\n                                                                                                                                    CALL gds.randomWalk.stream(\n                                                                                                                                        'RandomWalk-Dash',\n                                                                                                                                        {\n                                                                                                                                            sourceNodes: sourceNodes,\n                                                                                                                                            walkLength: toInteger($neodash_w_n),\n                                                                                                                                            walksPerNode: 1,\n                                                                                                                                            randomSeed: 727272,\n                                                                                                                                            concurrency: 1\n                                                                                                                                        }\n                                                                                                                                    )\n                                                                                                                                    YIELD nodeIds, path\n                                                                                                                                    RETURN nodeIds, path;",
+          "width": 20,
+          "height": 3,
+          "x": 4,
+          "y": 4,
+          "type": "graph",
+          "selection": {
+            "Artist": "name",
+            "Entity": "id",
+            "User": "id"
+          },
+          "settings": {
+            "refreshButtonEnabled": true,
+            "autorun": false
+          },
+          "schema": [
+            [
+              "Artist",
+              "name",
+              "id"
+            ],
+            [
+              "Entity",
+              "name",
+              "id"
+            ],
+            [
+              "User",
+              "id"
+            ]
+          ]
+        },
+        {
+          "id": "6877da72-0523-44e8-a10d-912f84892f63",
+          "title": "Longitud",
+          "query": "RETURN true;",
+          "width": 4,
+          "height": 3,
+          "x": 0,
+          "y": 4,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Free Text",
+            "entityType": "w_n",
+            "parameterName": "neodash_w_n"
+          },
+          "schema": []
+        }
+      ]
+    },
+    {
+      "title": "Controles",
+      "reports": [
+        {
+          "id": "3e4048c7-1205-4b67-ae23-926d14863f33",
+          "title": "Dijkstra 1",
+          "query": "                                            MATCH ()-[r:`DIJKSTRA-DASH`]->()\n                                            DETACH DELETE r;",
+          "width": 4,
+          "height": 2,
+          "x": 0,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "refreshButtonEnabled": true,
+            "autorun": false
+          }
+        },
+        {
+          "id": "b9c3e7dc-5432-402e-b113-72eadecaedb7",
+          "title": "Dijkstra 2",
+          "query": "                                            MATCH (source:User {id: toInteger($neodash_user_id)}),\n                                                  (target:Artist {name: $neodash_artist_name})\n                                            CALL gds.shortestPath.dijkstra.write(\n                                                'Dijkstra-Dash',\n                                                {\n                                                    sourceNode: source,\n                                                    targetNode: target,\n                                                    relationshipWeightProperty: 'weight',\n                                                    writeRelationshipType: 'DIJKSTRA-DASH',\n                                                    writeNodeIds: true,\n                                                    writeCosts: true\n                                                }\n                                            )\n                                            YIELD relationshipsWritten\n                                            RETURN relationshipsWritten;",
+          "width": 4,
+          "height": 2,
+          "x": 4,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "refreshButtonEnabled": true,
+            "autorun": false
+          }
+        },
+        {
+          "id": "3c5bc9ca-95e4-4340-b7dc-a362a575a8d1",
+          "title": "DSSSSP 1",
+          "query": "                                            MATCH ()-[r:`DSSSSP-DASH`]->()\n                                            DETACH DELETE r;",
+          "width": 4,
+          "height": 2,
+          "x": 0,
+          "y": 2,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "autorun": false,
+            "refreshButtonEnabled": true
+          }
+        },
+        {
+          "id": "bdb44dea-5102-4163-8a71-8c7dd71e5ab6",
+          "title": "DSSSSP 2",
+          "query": "                                            MATCH (source:User {id: toInteger($neodash_user_id_1)})\n                                            CALL gds.allShortestPaths.delta.write(\n                                                'DSSSSP-Dash',\n                                                {\n                                                    sourceNode: source,\n                                                    relationshipWeightProperty: 'weight',\n                                                    writeRelationshipType: 'DSSSSP-DASH',\n                                                    writeNodeIds: true,\n                                                    writeCosts: true\n                                                }\n                                            )\n                                            YIELD relationshipsWritten\n                                            RETURN relationshipsWritten;",
+          "width": 4,
+          "height": 2,
+          "x": 4,
+          "y": 2,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "refreshButtonEnabled": true,
+            "autorun": false
+          }
+        }
+      ]
+    }
+  ],
+  "parameters": {},
+  "extensions": {
+    "active": true,
+    "activeReducers": []
+  },
+  "uuid": "223c84ba-f462-406c-80e6-cdf61390d8f7"
+}
